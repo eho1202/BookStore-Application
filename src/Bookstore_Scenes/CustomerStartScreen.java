@@ -42,7 +42,6 @@ import javafx.scene.text.Text;
 public class CustomerStartScreen implements Initializable {
     private final TableView<Book> bookTableView = new TableView<>();
     private Group customerStartScreen = new Group();
-    private Customer customer;
     boolean isSelected = false;
     CustomerCostScreen customerCS = new CustomerCostScreen();
     BookStore books = BookStore.getInstance();
