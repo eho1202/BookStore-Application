@@ -1,0 +1,4 @@
+customer, password, 8620
+bruh, 1234, 10000
+c1, pppp, 100
+c2, asdf, 80
