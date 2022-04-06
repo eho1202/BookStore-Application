@@ -6,7 +6,7 @@ A single-window GUI based bookstore app that allows customers to purchase books 
 
 
 Collaborated with the following members:  
-Arjay Albisor  
-Clenard-Julius Galario  
+[Arjay Albisor](https://github.com/SaladJuice)  
+[Clenard-Julius Galario](https://github.com/Clenard)  
 [Ernestine Ho](https://github.com/eho1202)  
 [Ethan Moo-Young](https://github.com/e22my)  
