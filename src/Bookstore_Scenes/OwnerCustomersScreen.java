@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -37,8 +38,6 @@ public class OwnerCustomersScreen implements Initializable{
     
     private final TableView<Customer> customerTableView = new TableView<>();
     private Group ownerCustomersScreen = new Group();
-    private Customer customer;
-    Main main;
     BookStore bs = BookStore.getInstance();
     Owner owner = Owner.getInstance();
     
@@ -148,8 +147,8 @@ public class OwnerCustomersScreen implements Initializable{
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e -> {
             OwnerStartScreen ownerSS = new OwnerStartScreen();
-            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640);
-            main.getStage().setScene(ownerStartScene);
+            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640, Color.web("#ffefd4"));
+            Main.getStage().setScene(ownerStartScene);
         });
         
         // TilePane to wrap and set bottom row buttons to the same size
@@ -168,11 +167,6 @@ public class OwnerCustomersScreen implements Initializable{
         ownerCustomersScreen.getChildren().add(vbox);
         
         return ownerCustomersScreen;
-    }
-
-
-    public void setMainController(Main screen) {
-        this.main = screen;
     }
 
     @Override

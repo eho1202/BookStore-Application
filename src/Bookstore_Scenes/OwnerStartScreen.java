@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -25,7 +26,6 @@ public class OwnerStartScreen implements Initializable {
     private Group ownerStartScreen = new Group();
     OwnerBooksScreen ownerBS = new OwnerBooksScreen();
     OwnerCustomersScreen ownerCS = new OwnerCustomersScreen();
-    Main main;
     
     public Group OwnerStartScreen() {
         Button bookBtn = new Button("Books");
@@ -36,14 +36,14 @@ public class OwnerStartScreen implements Initializable {
         logout.setPrefSize(140, 60);
         
         bookBtn.setOnAction(e -> {
-            Scene ownerBooksScene = new Scene(ownerBS.OwnerBooksScreen(), 640, 640);
-            main.getStage().setScene(ownerBooksScene);
+            Scene ownerBooksScene = new Scene(ownerBS.OwnerBooksScreen(), 640, 640, Color.web("#ffefd4"));
+            Main.getStage().setScene(ownerBooksScene);
         });
         
         customerBtn.setOnAction(e -> {
             try {
-                Scene ownerCustomersScene = new Scene(ownerCS.OwnerCustomersScreen(), 640, 640);
-                main.getStage().setScene(ownerCustomersScene);
+                Scene ownerCustomersScene = new Scene(ownerCS.OwnerCustomersScreen(), 640, 640, Color.web("#ffefd4"));
+                Main.getStage().setScene(ownerCustomersScene);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -52,8 +52,8 @@ public class OwnerStartScreen implements Initializable {
         logout.setOnAction(e -> {
             try {
                 Parent loginRoot = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-                Scene loginScene = new Scene(loginRoot, 640, 640);
-                main.getStage().setScene(loginScene);
+                Scene loginScene = new Scene(loginRoot, 640, 640, Color.web("#e3bf74"));
+                Main.getStage().setScene(loginScene);
             } catch (IOException ex) {
                 Logger.getLogger(OwnerStartScreen.class.getName()).log(Level.SEVERE, null, ex);
                 ex.printStackTrace();
@@ -72,10 +72,6 @@ public class OwnerStartScreen implements Initializable {
         ownerStartScreen.getChildren().add(buttons);
         
         return ownerStartScreen;
-    }
-
-    public void setMainController(Main screen) {
-        this.main = screen;
     }
     
     @Override

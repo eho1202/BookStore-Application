@@ -3,6 +3,11 @@ package Bookstore;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Arjay Albisor
+ * 501018768
+ */
 public class BookStore {
  
     private static BookStore instance;

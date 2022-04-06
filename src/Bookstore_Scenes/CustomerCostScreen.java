@@ -24,16 +24,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -53,7 +50,8 @@ public class CustomerCostScreen implements Initializable {
 
     public Group CustomerCostScreen(boolean redeemOrNot, Customer customer) throws IOException {
 
-        for (Book b : books.getBooks()) {
+        // Get books with checkbox selected and add them to an arraylist
+        for (Book b : books.getBooks()) { 
             if (b.getCheckBox().isSelected()) {
                 subtotal += b.getPrice();
                 purchaseBooksList.add(b);
@@ -89,31 +87,39 @@ public class CustomerCostScreen implements Initializable {
         BigDecimal totalRounded = new BigDecimal(total).setScale(2, RoundingMode.HALF_DOWN);
         earnedPoints = (int) total * 10;
         customer.setPoints(earnedPoints);
-        String status = customer.getStatus();
 
+        // Text for subtotal, discount, total, points earned, and status
         Font fontSize = new Font(16);
-        Text buyStatus = new Text("SubTotal: $" + subtotalRounded + " \nDiscount: $" + discount + "\nTotal Cost: $" + totalRounded + "\nYou've earned " + earnedPoints + " points\n" + "Status: ");
-        Text customerStatus = new Text("\n\n\n\n"+status);
+        Text buyStatus = new Text("SubTotal: $" + subtotalRounded + " \nDiscount: $" + discount + "\nTotal Cost: $" + totalRounded + "\nYou've earned " + earnedPoints + " points");
+        Text customerStatus1 = new Text("Your new status: ");
+        Text customerStatus2 = new Text(customer.getStatus());
         buyStatus.setFont(fontSize);
-        customerStatus.setFont(fontSize);
+        customerStatus1.setFont(fontSize);
+        customerStatus2.setFont(fontSize);
+        customerStatus2.setStyle("-fx-font-weight: bold");
         
-        if (status.equalsIgnoreCase("silver")) {
-            customerStatus.setFill(Color.SILVER);
+        
+        // Change color of customer status
+        if (customer.getStatus().equalsIgnoreCase("silver")) {
+            customerStatus2.setFill(Color.SILVER);
         } else {
-            customerStatus.setFill(Color.GOLD);
+            customerStatus2.setFill(Color.GOLD);
         }
-
-        // HBox for displaying customer points and status
-        VBox header = new VBox();
-        header.getChildren().add(buyStatus);
         
-        HBox headerWrapper = new HBox();
-        headerWrapper.getChildren().addAll(buyStatus, customerStatus);
+        // HBox for wrapper customer status texts
+        HBox customerStatusWrapper = new HBox();
+        customerStatusWrapper.getChildren().addAll(customerStatus1, customerStatus2);
+        customerStatusWrapper.setPadding(Insets.EMPTY);
+        
+        // VBox for displaying customer points and status
+        VBox header = new VBox();
+        header.setPadding(Insets.EMPTY);
+        header.getChildren().addAll(buyStatus, customerStatusWrapper);
 
         // Set Table Columns
         TableColumn<Book, String> bookName = new TableColumn("Book Name");
         bookName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        bookName.setStyle("-fx-alignment: CENTER");
+        bookName.setStyle("-fx-alignment: CENTER_LEFT");
         bookName.setMinWidth(440);
 
         TableColumn<Book, Double> bookPrice = new TableColumn("Price");
@@ -126,34 +132,13 @@ public class CustomerCostScreen implements Initializable {
         checkoutTableView.setItems(purchasedBooks);
         checkoutTableView.getColumns().addAll(bookName, bookPrice);
         
-        VBox tableWrapper = new VBox();
-        tableWrapper.setSpacing(5);
-        for (Book b : purchaseBooksList) {
-            Text nameBook = new Text(b.getName());
-            Text priceBook = new Text(""+b.getPrice());
-            BorderPane item = new BorderPane();
-            item.setLeft(nameBook);
-            item.setRight(priceBook);
-            Line line = new Line(0, 150, 560, 150);
-            tableWrapper.getChildren().addAll(item, line);
-        }
-        
-        ScrollPane scroll = new ScrollPane(tableWrapper);
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setFitToWidth(true);
-        if(purchaseBooksList.size() <= 4) {
-            scroll.setFitToHeight(true);
-        } else {
-            scroll.setPrefHeight(130);
-        }
-        
         Button logout = new Button("Logout");
         logout.setPrefSize(100, 20);
 
         logout.setOnAction(e -> {
             try {
                 Parent loginRoot = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-                Scene loginScene = new Scene(loginRoot, 640, 640);
+                Scene loginScene = new Scene(loginRoot, 640, 640, Color.web("#e3bf74"));
                 Main.getStage().setScene(loginScene);
                 
                 for (Book b : books.getBooks()) { // reset checkbox when logging out
@@ -174,11 +159,11 @@ public class CustomerCostScreen implements Initializable {
         buttonRow.getChildren().add(logout);
 
         //VBox to wrap header, purchase books list, and button row together
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(200, 50, 0, 50)); // (top, right, bottom, left)
-        vbox.getChildren().addAll(scroll, headerWrapper, buttonRow);
-        
-        CustomerCostScreen.getChildren().add(vbox);
+        VBox checkoutWrapper = new VBox();
+        checkoutWrapper.setPadding(new Insets(50, 50, 0, 50)); // (top, right, bottom, left)
+        checkoutWrapper.getChildren().addAll(checkoutTableView, header, buttonRow);
+
+        CustomerCostScreen.getChildren().add(checkoutWrapper);
 
         return CustomerCostScreen;
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Bookstore_Scenes;
 
 import Bookstore.BookStore;
@@ -20,10 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import java.io.IOException;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 /**
  *
  * @author Ethan Moo-Young
  */
+//Log-in Screen Set-up
 public class FXMLDocumentController implements Initializable {
     
     @FXML
@@ -44,25 +41,24 @@ public class FXMLDocumentController implements Initializable {
         Customer customer;
         if(username.getText().toString().equals(o.getUsername()) && password.getText().toString().equals(o.getPassword())) {
             wrongLogin.setText("Success");
-            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640);
+            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640, Color.web("#ffefd4"));
             m.changeScene(ownerStartScene);
         } else if (username.getText().isEmpty() || password.getText().isEmpty()){
             wrongLogin.setText("Empty Username or Password");
         } else {
-            wrongLogin.setText("Username or Password is incorrect");
-        }
-        
-        for (Customer c : bookstore.getCustomers()) {
-            if (username.getText().toString().equals(c.getUsername()) && password.getText().toString().equals(c.getPassword())) {
-                customer = c;
-                try {
-                    Scene customerStartScene = new Scene(customerSS.CustomerStartScreen(customer), 640, 640);
-                    m.changeScene(customerStartScene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
+            for (Customer c : bookstore.getCustomers()) {
+                if (username.getText().toString().equals(c.getUsername()) && password.getText().toString().equals(c.getPassword())) {
+                    wrongLogin.setText("Success");
+                    customer = c;
+                    try {
+                        Scene customerStartScene = new Scene(customerSS.CustomerStartScreen(customer), 640, 640, Color.web("#ffefd4"));
+                        m.changeScene(customerStartScene);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
                 wrongLogin.setText("Username or Password is incorrect");
+                }
             }
         }
         

@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
@@ -36,7 +37,6 @@ public class OwnerBooksScreen implements Initializable {
     private Group ownerBooksScreen = new Group();
     Owner owner = Owner.getInstance();
     BookStore books = BookStore.getInstance();
-    Main main;
     
     public ObservableList<Book> addBooks() throws IOException {
         bookList.addAll(books.getBooks());
@@ -65,8 +65,8 @@ public class OwnerBooksScreen implements Initializable {
         grid.getChildren().add(bookPrice);
         
         //Defining the add button
-        Button add = new Button("ADD");
-        add.setPrefWidth(50);
+        Button add = new Button("Add");
+        add.setPrefWidth(70);
         GridPane.setConstraints(add, 1, 1);
         grid.getChildren().add(add);
         
@@ -78,11 +78,11 @@ public class OwnerBooksScreen implements Initializable {
         GridPane.setConstraints(hbAdd, 0, 5);
         
         //defining the delete button 
-        Button del = new Button("DELETE");
+        Button del = new Button("Delete");
         del.setPrefWidth(200);
         
          //defining the back button 
-        Button back = new Button("BACK");
+        Button back = new Button("Back");
         back.setPrefWidth(200);
         
         //groups delete and back button on the same row
@@ -168,8 +168,8 @@ public class OwnerBooksScreen implements Initializable {
         
         back.setOnAction(e -> {
             OwnerStartScreen ownerSS = new OwnerStartScreen();
-            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640);
-            main.getStage().setScene(ownerStartScene);
+            Scene ownerStartScene = new Scene(ownerSS.OwnerStartScreen(), 640, 640, Color.web("#ffefd4"));
+            Main.getStage().setScene(ownerStartScene);
         });
     
  
@@ -186,10 +186,6 @@ public class OwnerBooksScreen implements Initializable {
         
         return ownerBooksScreen;
         
-    }
-    
-    public void setMainController(Main screen) {
-        this.main = screen;
     }
     
     @Override

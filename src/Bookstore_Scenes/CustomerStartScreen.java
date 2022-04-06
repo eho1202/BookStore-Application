@@ -61,20 +61,23 @@ public class CustomerStartScreen implements Initializable {
         double points = customer.getPoints();
         status = customer.getStatus();
         
+        // Text for customer name, points, and status
         Text customerInfoStatus = new Text(10, 50, "Welcome " + name + ", You have " + points + " points. Your status is ");
         Text customerStatus = new Text(10, 50, status);
+        customerInfoStatus.setFont(fontSize);
+        customerStatus.setFont(fontSize);
+        customerStatus.setStyle("-fx-font-weight: bold");
         
+        // Alert for when customer does not have books chosen or when customer has no points
         Alert errorAlert = new Alert(AlertType.ERROR);
+        errorAlert.setHeaderText("Something seems wrong...");
         
+        // Change color of customer status
         if (status.equalsIgnoreCase("silver")) {
             customerStatus.setFill(Color.SILVER);
         } else {
             customerStatus.setFill(Color.GOLD);
         }
-        
-        customerInfoStatus.setFont(fontSize);
-        customerStatus.setFont(fontSize);
-        customerStatus.setStyle("-fx-font-weight: bold");
         
         // HBox for displaying customer name, points, and status
         HBox customerInfo = new HBox();
@@ -123,7 +126,7 @@ public class CustomerStartScreen implements Initializable {
                         isSelected = true;
                 }
                 if (isSelected) {
-                    Scene customerCostScene = new Scene(customerCS.CustomerCostScreen(false, customer), 640, 640);
+                    Scene customerCostScene = new Scene(customerCS.CustomerCostScreen(false, customer), 640, 640, Color.web("#ffefd4"));
                     Main.getStage().setScene(customerCostScene);
                 } else {
                     errorAlert.setContentText("Please select a book before purchasing!");
@@ -143,7 +146,7 @@ public class CustomerStartScreen implements Initializable {
                             isSelected = true;
                     }
                     if (isSelected) {
-                        Scene customerCostScene = new Scene(customerCS.CustomerCostScreen(true, customer), 640, 640);
+                        Scene customerCostScene = new Scene(customerCS.CustomerCostScreen(true, customer), 640, 640, Color.web("#ffefd4"));
                         Main.getStage().setScene(customerCostScene);
                     } else {
                         errorAlert.setContentText("Please select a book before purchasing!");
@@ -183,8 +186,6 @@ public class CustomerStartScreen implements Initializable {
         buttonRow.setPrefRows(3);
         buttonRow.setHgap(10);
         buttonRow.getChildren().addAll(buy, redeemAndBuy, logout);
-        
-        errorAlert.setHeaderText("Something seems wrong...");
         
         // VBox to wrap header, book table, and button row together
         VBox vbox = new VBox();
